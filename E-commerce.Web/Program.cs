@@ -1,14 +1,19 @@
 
+using System.Threading.Tasks;
 using DomainLayer.Contracts;
 using Microsoft.EntityFrameworkCore;
 using Persistence;
 using Persistence.Data.Contexts;
+using Persistence.Respositories;
+using Service;
+using Service.MappingProfiles;
+using ServiceAbstraction;
 
 namespace E_commerce.Web
 {
     public class Program
     {
-        public static void Main(string[] args)
+        public static async Task Main(string[] args)
         {
             var builder = WebApplication.CreateBuilder(args);
 
@@ -26,7 +31,9 @@ namespace E_commerce.Web
             });
 
             builder.Services.AddScoped<IDataSeeding, DataSeeding>();
-
+            builder.Services.AddScoped<IUnitOfWork, UnitOfWork>();
+            builder.Services.AddAutoMapper(typeof(ProductProfile).Assembly);
+            builder.Services.AddScoped<IServiceManager, ServiceManager>();
 
 
             #endregion
@@ -36,13 +43,15 @@ namespace E_commerce.Web
 
             var app = builder.Build();
 
-            
+
+            #region Data Sedding
 
             using var Scope = app.Services.CreateScope();
-           
-            
             var DataSeedingObj = Scope.ServiceProvider.GetRequiredService<IDataSeeding>();
-            DataSeedingObj.SeedData();
+
+            await DataSeedingObj.SeedDataAsync();
+
+            #endregion
             
        
 
@@ -54,7 +63,8 @@ namespace E_commerce.Web
             }
 
             app.UseHttpsRedirection();
-
+            // for resource files like images and css
+            app.UseStaticFiles();
 
             app.UseAuthorization();
 
