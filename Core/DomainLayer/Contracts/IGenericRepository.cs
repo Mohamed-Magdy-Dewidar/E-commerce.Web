@@ -16,14 +16,22 @@ namespace DomainLayer.Contracts
 
         void Delete(TEntity entity);
 
-        //Task<IEnumerable<TResult>> GetAllAsync<TResult>(Expression<Func<TEntity, TResult>> selector);
-
-        //Task<IEnumerable<TEntity>> GetAllAsync(Expression<Func<TEntity, bool>> predicate);
         
         Task<IEnumerable<TEntity>> GetAllAsync();
         
         Task<TEntity?> GetByIdAsync(TKey Id);
 
+        #region With Specifications
+
+        Task<IEnumerable<TEntity>> GetAllAsync(ISpecifications<TEntity , TKey> specifications);
+
+        Task<TEntity?> GetByIdAsync(ISpecifications<TEntity, TKey> specifications);
+
+
+        Task<int> CountAsync(ISpecifications<TEntity, TKey> specifications);
+
+
+        #endregion
 
 
 

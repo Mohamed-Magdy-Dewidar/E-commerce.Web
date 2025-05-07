@@ -35,7 +35,24 @@ namespace Persistence.Respositories
 
         public void Delete(TEntity entity)
             => _contextStoreDb.Set<TEntity>().Remove(entity);
-        
+
+
+        #region With Specifications
+
+
+        public async Task<IEnumerable<TEntity>> GetAllAsync(ISpecifications<TEntity, TKey> specifications)
+           =>  await SpecificationEvaluator.CreateQuery<TEntity, TKey>(_contextStoreDb.Set<TEntity>(), specifications).ToListAsync();
+
+
+        public async Task<TEntity?> GetByIdAsync(ISpecifications<TEntity, TKey> specifications)
+              => await SpecificationEvaluator.CreateQuery<TEntity, TKey>(_contextStoreDb.Set<TEntity>(), specifications).FirstOrDefaultAsync();
+
+        public async Task<int> CountAsync(ISpecifications<TEntity, TKey> specifications)
+            => await SpecificationEvaluator.CreateQuery<TEntity, TKey>(InputQuery: _contextStoreDb.Set<TEntity>(),specifications).CountAsync();
+
+
+        #endregion
+
 
     }
 }

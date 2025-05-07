@@ -6,7 +6,9 @@ using System.Threading.Tasks;
 using AutoMapper;
 using DomainLayer.Contracts;
 using DomainLayer.Models;
+using Service.Specifications;
 using ServiceAbstraction;
+using Shared;
 using Shared.DataTransferObjects;
 
 namespace Service
@@ -24,11 +26,15 @@ namespace Service
 
 
 
-        public async Task<IEnumerable<ProductDto>> GetAllProductsAsync()
+        public async Task<PaginatedResult<ProductDto>> GetAllProductsAsync(ProductQueryParams queryParams)
         {
-            var products = await _unitOfWork.GetRepository<Product, int>().GetAllAsync();
+            var Repository = _unitOfWork.GetRepository<Product, int>();
+            var Specification = new ProductWithBrandAndTypeSpecifications(queryParams);
+            var products = await Repository.GetAllAsync(Specification);                           
             var productsDto = _mapper.Map<IEnumerable<Product>, IEnumerable<ProductDto>>(products);
-            return productsDto;
+            var TotalCount = await Repository.CountAsync(new ProductCountSpecification(queryParams));
+            return new PaginatedResult<ProductDto>(pageSize: productsDto.Count() , pageIndex: queryParams.PageIndex , totalCount: TotalCount , data: productsDto);
+        
         }
 
         public async Task<IEnumerable<TypeDto>> GetAllTypesAsync()
@@ -40,7 +46,8 @@ namespace Service
 
         public async Task<ProductDto> GetProductByIdAsync(int id)
         {
-            var product = await _unitOfWork.GetRepository<Product, int>().GetByIdAsync(id);
+            var Specification = new ProductWithBrandAndTypeSpecifications(id);
+            var product = await _unitOfWork.GetRepository<Product, int>().GetByIdAsync(Specification);
             if (product == null)
             {
                 throw new Exception("Product not found");
