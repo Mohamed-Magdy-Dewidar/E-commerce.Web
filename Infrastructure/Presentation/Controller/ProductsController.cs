@@ -6,20 +6,25 @@ using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
 using ServiceAbstraction;
 using Shared;
-using Shared.DataTransferObjects;
+using Shared.DataTransferObjects.ProductModuleDto;
 
 namespace Presentation.Controller
 {
+
+
     [ApiController]
     [Route("api/[controller]")]
     // baseurl/api/Products
-    public class ProductsControllers(IServiceManager _serviceManager) : ControllerBase
+    public class ProductsController(IServiceManager _serviceManager) : ControllerBase
     {
 
 
         [HttpGet]
         public async Task<ActionResult<PaginatedResult<ProductDto>>> GetAllProducts([FromQuery] ProductQueryParams queryParams)
         {
+            // Validate the query parameters the Client did not send queries that where not register in the query params
+            
+
             var products = await _serviceManager.ProductService.GetAllProductsAsync(queryParams);
             return Ok(products);
         }

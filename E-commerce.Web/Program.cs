@@ -1,13 +1,13 @@
 
 using System.Threading.Tasks;
 using DomainLayer.Contracts;
-using Microsoft.EntityFrameworkCore;
+using E_commerce.Web.CustomMiddleWares;
+using E_commerce.Web.Extenstion;
+using E_commerce.Web.Factory;
+using Microsoft.AspNetCore.Mvc;
 using Persistence;
-using Persistence.Data.Contexts;
-using Persistence.Respositories;
 using Service;
-using Service.MappingProfiles;
-using ServiceAbstraction;
+
 
 namespace E_commerce.Web
 {
@@ -22,19 +22,13 @@ namespace E_commerce.Web
 
             builder.Services.AddControllers();
             // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
-            builder.Services.AddEndpointsApiExplorer();
-            builder.Services.AddSwaggerGen();
 
-            builder.Services.AddDbContext<StoreDbContext>(options =>
-            {
-                options.UseSqlServer(builder.Configuration.GetConnectionString("DefaultConnection"));
-            });
+            builder.Services.AddSwaggerServices();
+            builder.Services.AddInfrastructureServices(builder.Configuration);
+            builder.Services.AddApplicationServices();
 
-            builder.Services.AddScoped<IDataSeeding, DataSeeding>();
-            builder.Services.AddScoped<IUnitOfWork, UnitOfWork>();
-            builder.Services.AddAutoMapper(typeof(ProductProfile).Assembly);
-            builder.Services.AddScoped<IServiceManager, ServiceManager>();
 
+            builder.Services.AddWebApplicationServices();
 
             #endregion
 
@@ -46,20 +40,23 @@ namespace E_commerce.Web
 
             #region Data Sedding
 
-            using var Scope = app.Services.CreateScope();
-            var DataSeedingObj = Scope.ServiceProvider.GetRequiredService<IDataSeeding>();
+            await app.SeedDataBaseAsync();
 
-            await DataSeedingObj.SeedDataAsync();
 
             #endregion
-            
-       
+
+
 
             // Configure the HTTP request pipeline.
+
+            app.UseCustomExceptionMiddleWares();
+
+
+
+
             if (app.Environment.IsDevelopment())
             {
-                app.UseSwagger();
-                app.UseSwaggerUI();
+               app.UseSwaggerMiddleWares();
             }
 
             app.UseHttpsRedirection();
