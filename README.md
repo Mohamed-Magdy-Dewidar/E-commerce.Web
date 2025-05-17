@@ -1,10 +1,9 @@
 # 🛍️ E-Commerce REST API
 
-![.NET Core](https://img.shields.io/badge/.NET-6.0-purple)
+![.NET Core](https://img.shields.io/badge/.NET-8.0-purple)
 ![Entity Framework](https://img.shields.io/badge/Entity%20Framework%20Core-7.0-blue)
-![PostgreSQL](https://img.shields.io/badge/PostgreSQL-15.0-blue)
 
-A modern RESTful API for e-commerce applications built with ASP.NET Core, Entity Framework Core, and PostgreSQL.
+A modern RESTful API for e-commerce applications built with ASP.NET Core, Entity Framework Core, and Sql Server as Database and Redis as In Memory Data Store for cache.
 
 ## ✨ Features
 
@@ -18,7 +17,7 @@ A modern RESTful API for e-commerce applications built with ASP.NET Core, Entity
 
 ## 🛠️ Technology Stack
 
-- **Backend**: ASP.NET Core 6.0
+- **Backend**: ASP.NET Core 8.0
 - **Database**: PostgreSQL with Entity Framework Core
 - **Authentication**: JWT Bearer Tokens
 - **API Documentation**: Swagger/OpenAPI
@@ -29,8 +28,7 @@ A modern RESTful API for e-commerce applications built with ASP.NET Core, Entity
 
 ### Prerequisites
 
-- [.NET 6.0 SDK](https://dotnet.microsoft.com/download)
-- [PostgreSQL 15+](https://www.postgresql.org/download/)
+- [.NET 8.0 SDK](https://dotnet.microsoft.com/download)
 - [Visual Studio 2022](https://visualstudio.microsoft.com/) or [VS Code](https://code.visualstudio.com/)
 
 ### Installation
