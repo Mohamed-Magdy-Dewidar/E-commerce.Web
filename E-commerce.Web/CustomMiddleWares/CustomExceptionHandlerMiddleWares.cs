@@ -37,11 +37,7 @@ namespace E_commerce.Web.CustomMiddleWares
 
         private static async Task HandleExceptionAsync(HttpContext context, Exception ex)
         {
-            context.Response.StatusCode = ex switch
-            {
-                NotFoundException => StatusCodes.Status404NotFound,
-                _ => StatusCodes.Status500InternalServerError
-            };
+
 
             var ResponseToReturn = new ErrorToReturn()
             {
@@ -49,9 +45,24 @@ namespace E_commerce.Web.CustomMiddleWares
                 ErrorMessage = ex.Message
             };
 
+            context.Response.StatusCode = ex switch
+            {
+                BadRequestException badRequestException => GetBadRequestException(badRequestException , ResponseToReturn),
+                UnauthorizedException => StatusCodes.Status401Unauthorized,
+                NotFoundException => StatusCodes.Status404NotFound,
+                _ => StatusCodes.Status500InternalServerError
+            };
+
+
             //JsonSerializer.Serialize(ResponseToReturn);
             // return Object as Json
             await context.Response.WriteAsJsonAsync(ResponseToReturn);
+        }
+
+        private static int GetBadRequestException(BadRequestException badRequestException, ErrorToReturn responseToReturn)
+        {
+            responseToReturn.Errors = badRequestException.Errors;
+            return StatusCodes.Status400BadRequest; 
         }
 
         private static async Task HandleNotFoundEndPiontAsync(HttpContext context)

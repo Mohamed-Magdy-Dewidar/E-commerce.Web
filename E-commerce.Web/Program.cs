@@ -29,6 +29,7 @@ namespace E_commerce.Web
 
 
             builder.Services.AddWebApplicationServices();
+            builder.Services.AddJWTServices(builder.Configuration); 
 
             #endregion
 
@@ -63,7 +64,11 @@ namespace E_commerce.Web
             // for resource files like images and css
             app.UseStaticFiles();
 
+            // order is important 
+            app.UseRouting();
+            app.UseAuthentication();
             app.UseAuthorization();
+            //
 
 
             app.MapControllers();

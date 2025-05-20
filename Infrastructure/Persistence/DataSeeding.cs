@@ -6,15 +6,61 @@ using System.Text.Json;
 using System.Text.Json.Nodes;
 using System.Threading.Tasks;
 using DomainLayer.Contracts;
+using DomainLayer.Models.IdentityModule;
 using DomainLayer.Models.ProductModule;
+using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 using Persistence.Data.Contexts;
+using Persistence.Identity;
+using Service;
 
 namespace Persistence
 {
-    public class DataSeeding(StoreDbContext _context) : IDataSeeding
+    public class DataSeeding(StoreDbContext _context , UserManager<ApplicationUser> _userManager
+        , RoleManager<IdentityRole> _roleManager , StoreIdentityDbContext _identityDbContext ) : IDataSeeding
     {
+        public async Task IdentitySeedDataAsync()
+        {
+            try
+            {
+                if (!_roleManager.Roles.Any())
+                {
+                    await _roleManager.CreateAsync(new IdentityRole("Admin"));
+                    await _roleManager.CreateAsync(new IdentityRole("SuperAdmin"));
+                }
 
+                if (!_userManager.Users.Any())
+                {
+                    var User01 = new ApplicationUser()
+                    {
+                        Email = "mohamedMagdy@gmail.com",
+                        DisplayName = "mego",
+                        PhoneNumber = "09123456789",
+                        UserName = "mohamedMagdy",
+                    };
+                    var User02 = new ApplicationUser()
+                    {
+                        Email = "salmaMohamed@gmail.com",
+                        DisplayName = "solly",
+                        PhoneNumber = "09123456789",
+                        UserName = "salmaMohamed",
+                    };
+
+                    await _userManager.CreateAsync(User01, "P@ssw0rd");
+                    await _userManager.CreateAsync(User02, "P@ssw0rd");
+
+                    await _userManager.AddToRoleAsync(User01, "SuperAdmin");
+                    await _userManager.AddToRoleAsync(User02, "Admin");
+
+                    await _identityDbContext.SaveChangesAsync();
+
+                }
+            }
+            catch (Exception ex)
+            {
+
+            }
+        }
 
         public async Task SeedDataAsync()
         {

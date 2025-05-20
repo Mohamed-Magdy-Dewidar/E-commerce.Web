@@ -11,6 +11,7 @@ namespace E_commerce.Web.Extenstion
             using var Scope = app.Services.CreateScope();
             var DataSeedingObj = Scope.ServiceProvider.GetRequiredService<IDataSeeding>();
             await DataSeedingObj.SeedDataAsync();
+            await DataSeedingObj.IdentitySeedDataAsync();
 
         }
 
