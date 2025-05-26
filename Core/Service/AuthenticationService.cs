@@ -113,7 +113,7 @@ namespace Service
                 issuer: configuration["JWTOptions:Issuer"],
                 audience: configuration["JWTOptions:Audience"],
                 claims: Clamis,
-                expires: DateTime.Now.AddHours(1),
+                expires: DateTime.Now.AddDays(8),
                 signingCredentials: Credintials
             );
 

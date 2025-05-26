@@ -100,7 +100,7 @@ namespace Persistence
                 }
             }
 
-            // Finally seed products
+            // seed products
             if (!_context.Products.Any())
             {
                 var productsData = await File.ReadAllTextAsync(@"../Infrastructure/Persistence/Data/DataSeed/products.json");
@@ -109,6 +109,19 @@ namespace Persistence
                 if (products?.Count > 0)
                 {
                     await _context.Products.AddRangeAsync(products);
+                    hasChanges = true;
+                }
+            }
+
+            //seed Delivery
+            if (!_context.Set<DeliveryMethod>().Any())
+            {
+                var DeliveryMethodData = await File.ReadAllTextAsync(@"../Infrastructure/Persistence/Data/DataSeed/delivery.json");
+                var DeliveryMethods = JsonSerializer.Deserialize<List<DeliveryMethod>>(DeliveryMethodData);
+
+                if (DeliveryMethods?.Count > 0)
+                {
+                    await _context.Set<DeliveryMethod>().AddRangeAsync(DeliveryMethods);
                     hasChanges = true;
                 }
             }
