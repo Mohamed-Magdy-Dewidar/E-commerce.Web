@@ -1,91 +1,133 @@
-# 🛍️ E-Commerce REST API
+# 🛒 E-commerce API
 
-![.NET Core](https://img.shields.io/badge/.NET-8.0-purple)
-![Entity Framework](https://img.shields.io/badge/Entity%20Framework%20Core-7.0-blue)
+An advanced, modular ASP.NET Core (.NET 9) API for an e-commerce platform. This backend includes Redis caching, JWT authentication, Stripe payment integration, and a clean architecture using repository and specification patterns.
 
-A modern RESTful API for e-commerce applications built with ASP.NET Core, Entity Framework Core, and Sql Server as Database and Redis as In Memory Data Store for cache.
+---
 
-## ✨ Features
+## 🚀 Tech Stack
 
-- **Product Management**: CRUD operations for products with categories and brands
-- **User Authentication**: JWT-based authentication system
-- **Shopping Cart**: Persistent cart functionality
-- **Order Processing**: Complete order lifecycle management
-- **Search & Filtering**: Advanced product search capabilities
-- **Pagination**: Efficient data retrieval
-- **Swagger Documentation**: Interactive API documentation
+- **Framework:** ASP.NET Core (.NET 9)
+- **Database:** SQL Server via Entity Framework Core
+- **Authentication:** JWT (JSON Web Tokens)
+- **Caching:** Redis (via Docker)
+- **Payments:** Stripe API
+- **Architecture:**
+  - Clean Architecture (Modular)
+  - Repository Pattern
+  - Specification Pattern
+- **Tooling:** AutoMapper, Docker, Swagger
 
-## 🛠️ Technology Stack
+---
 
-- **Backend**: ASP.NET Core 8.0
-- **Database**: PostgreSQL with Entity Framework Core
-- **Authentication**: JWT Bearer Tokens
-- **API Documentation**: Swagger/OpenAPI
-- **Testing**: xUnit (optional)
-- **CI/CD**: GitHub Actions (optional)
+## 📦 Features
 
-## 🚀 Getting Started
+### 🛍️ Product Module
+- Advanced filtering, sorting, and pagination
+- Specification pattern for clean query logic
+- Consistent and well-structured API responses
+
+### 🧺 Basket Module
+- Redis-based persistent basket (cart)
+- CRUD operations with a modular Redis repository
+
+### 🔐 Authentication Module
+- JWT-based user registration and login
+- Identity integration with custom exception handling
+
+### 📦 Orders Module
+- Complete order management with delivery options
+- Database migrations for new order and delivery structures
+
+### 💳 Payments Module
+- Stripe integration for secure payment processing
+- PaymentIntent tracking and webhook handling
+- Redis-based response caching with custom cache attribute
+
+---
+
+## 🛠️ How to Run the Project
 
 ### Prerequisites
 
-- [.NET 8.0 SDK](https://dotnet.microsoft.com/download)
-- [Visual Studio 2022](https://visualstudio.microsoft.com/) or [VS Code](https://code.visualstudio.com/)
+- [Visual Studio 2022+](https://visualstudio.microsoft.com/)
+- [.NET 9 SDK](https://dotnet.microsoft.com/en-us/download/dotnet/9.0)
+- [Docker Desktop](https://www.docker.com/products/docker-desktop)
+- Stripe test account (to get your test API keys)
 
-### Installation
+### Redis Setup (via Docker)
 
-1. Clone the repository:
-   ```bash
-   git clone https://github.com/Mohamed-Magdy-Dewidar/E-commerce.Web.git
-Navigate to project directory:
+> Redis is required for the basket and cache features.
 
-bash
-cd E-commerce.Web
-Configure database:
+```bash
+docker run -d --name redis-cart -p 6379:6379 redis
+````
 
-Update connection string in appsettings.json
 
-Run migrations:
+⚠️ Redis on Windows
+Redis on Windows is not officially supported.
+Using Docker is the recommended approach for local development.
 
-bash
-dotnet ef database update
-Run the application:
+💳 Stripe Setup
+Go to https://dashboard.stripe.com
 
-bash
-dotnet run
-📚 API Documentation
-Access interactive API documentation at:
+Navigate to Developers > API Keys
 
-http://localhost:5000/swagger
-🌱 Seed Data
-The application comes with seed data for:
+Copy your Publishable key and Secret key
 
-Product brands
+Update your appsettings.json like this:
 
-Product types
+```json
+"StripeSettings": {
+  "SecretKey": "sk_test_your_key_here",
+  "PublishableKey": "pk_test_your_key_here"
+},
+"JwtSettings": {
+  "Key": "your_jwt_secret_here",
+  "Issuer": "your_api_issuer"
+}
+```
 
-Sample products
 
-To seed the database, run:
+▶️ Running the App (via Visual Studio)
+Open the solution in Visual Studio.
 
-bash
-dotnet run --seed
-🤝 Contributing
-Contributions are welcome! Please follow these steps:
+Ensure the Infrastructure project is used for Entity Framework Core migrations.
 
-Fork the repository
+Open Package Manager Console and run:
 
-Create your feature branch (git checkout -b feature/AmazingFeature)
+Add-Migration InitialCreate
+Update-Database
 
-Commit your changes (git commit -m 'Add some AmazingFeature')
+Set the Presentation project as the Startup Project.
 
-Push to the branch (git push origin feature/AmazingFeature)
+Press F5 or click Run.
 
-Open a Pull Request
+Access the Swagger UI:
 
-📄 License
-This project is licensed under the GNU Affero General Public License v3.0 - see the LICENSE file for details.
+which will open at port localhost:7060
 
-📧 Contact
-Mohamed Magdy Dewidar - mohamed.magdy@example.com
+📌 Notes
+Ensure Redis is running (via Docker) before launching the app.
 
-Project Link: https://github.com/Mohamed-Magdy-Dewidar/E-commerce.Web
+Stripe and JWT secrets are required for full functionality.
+
+Codebase is modular and organized into:
+
+Product
+
+Basket
+
+Identity
+
+Orders
+
+Payment
+
+🧪 Testing
+Swagger UI available for interactive API testing.
+
+Use Authorization headers for protected endpoints.
+
+Stripe test mode supports webhooks and test cards.
+
+
