@@ -41,11 +41,13 @@ namespace Service
         public async Task<AddressDto> GetCurrentUserAddressAsync(string Email)
         {
             var user = await _userManager.Users.Include(u => u.Address).FirstOrDefaultAsync(x => x.Email == Email) ?? throw new UserNotFoundException(Email);
-            if (user.Address is null)
-            {
-                throw new AddressNotFoundException(user?.UserName ?? "UserName:Unknown");
-            }
-            
+
+            // angular project doesn not handle if user does not have address
+            //if (user.Address is null)
+            //{
+            //    throw new AddressNotFoundException(user?.UserName ?? "UserName:Unknown");
+            //}
+
             return _mapper.Map<Address , AddressDto>(user.Address);
 
         }

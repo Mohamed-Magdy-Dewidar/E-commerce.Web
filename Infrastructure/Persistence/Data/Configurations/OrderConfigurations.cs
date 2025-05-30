@@ -17,7 +17,9 @@ namespace Persistence.Data.Configurations
             builder.Property(O => O.SubTotal)
                 .HasColumnType("decimal(8,2)");
 
-            builder.HasMany(O => O.Items).WithOne();
+            builder.HasMany(O => O.Items).
+                WithOne()
+                .OnDelete(DeleteBehavior.Cascade);
 
 
             #region PaymentStatus

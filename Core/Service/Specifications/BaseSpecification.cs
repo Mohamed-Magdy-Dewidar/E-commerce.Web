@@ -72,8 +72,6 @@ namespace Service.Specifications
         protected void ApplyPagination(int PageSize , int PageIndex)
         {
             IsPaginated = true;
-            if(PageSize <= 0)
-                throw new ArgumentOutOfRangeException(nameof(PageSize), "Page size must be greater than zero.");
             Take = PageSize;
             if (PageIndex <= 0)
                 throw new ArgumentOutOfRangeException(nameof(PageSize), "Page Index must be greater than zero.");

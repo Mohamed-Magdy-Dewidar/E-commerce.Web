@@ -14,7 +14,7 @@ namespace Shared.DataTransferObjects.OrderModuleDto
         
         public int DeliveryMethodId { get; set; } = default!;
 
-        public AddressDto Address { get; set; } = default!;
+        public AddressDto shipToAddress { get; set; } = default!;
 
     }
 }

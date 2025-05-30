@@ -9,7 +9,7 @@ namespace Persistence.Data.Configurations
 
             builder.ToTable("DeliveryMethods");
 
-            builder.Property(d => d.Price).HasColumnType("decimal(8,2)");
+            builder.Property(d => d.Cost).HasColumnType("decimal(8,2)");
 
             builder.Property(d => d.ShortName)
                 .HasColumnType("varchar")

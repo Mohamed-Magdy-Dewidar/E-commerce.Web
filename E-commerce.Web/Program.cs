@@ -20,8 +20,18 @@ namespace E_commerce.Web
 
             #region Add services to the container.
 
+
+
             builder.Services.AddControllers();
             // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
+            
+            builder.Services.AddCors(options =>
+            {
+                options.AddPolicy("CorsPolicyAllowAll",
+                    builder => builder.AllowAnyOrigin()
+                        .AllowAnyMethod()
+                        .AllowAnyHeader());
+            });
 
             builder.Services.AddSwaggerServices();
             builder.Services.AddInfrastructureServices(builder.Configuration);
@@ -61,6 +71,7 @@ namespace E_commerce.Web
             }
 
             app.UseHttpsRedirection();
+            app.UseCors("CorsPolicyAllowAll");
             // for resource files like images and css
             app.UseStaticFiles();
 

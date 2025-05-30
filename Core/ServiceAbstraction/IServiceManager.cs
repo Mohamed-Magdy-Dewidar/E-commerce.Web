@@ -15,6 +15,8 @@ namespace ServiceAbstraction
 
         IOrderService OrderService { get; }
 
+        IPaymentService PaymentService { get; }
+
 
 
 

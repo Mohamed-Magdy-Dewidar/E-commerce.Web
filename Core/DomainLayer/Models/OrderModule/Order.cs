@@ -16,13 +16,14 @@ namespace DomainLayer.Models.OrderModule
         {
             
         }
-        public Order(string userEmail, OrderAddress orderAddress, DeliveryMethod deliveryMethod, ICollection<OrderItem> items, decimal subTotal)
+        public Order(string userEmail, OrderAddress orderAddress, DeliveryMethod deliveryMethod, ICollection<OrderItem> items, decimal subTotal , string paymentIntentId)
         {
             UserEmail = userEmail;
             OrderAddress = orderAddress;
             DeliveryMethod = deliveryMethod;
             Items = items;
             SubTotal = subTotal;
+            PaymentIntentId = paymentIntentId;
         }
 
         public string UserEmail { get; set; } = default!;
@@ -46,7 +47,9 @@ namespace DomainLayer.Models.OrderModule
         //public decimal Total { get { return SubTotal + DeliveryMethod.Price;  } }
         
           
-        public decimal GetTotal() => SubTotal + DeliveryMethod.Price; 
+        public decimal GetTotal() => SubTotal + DeliveryMethod.Cost;
+
+        public string PaymentIntentId { get; set; } 
 
 
 

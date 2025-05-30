@@ -1,6 +1,6 @@
 ﻿using DomainLayer.Contracts;
 using E_commerce.Web.CustomMiddleWares;
-
+using Swashbuckle.AspNetCore.SwaggerUI;
 namespace E_commerce.Web.Extenstion
 {
     public static class WebApplicationServicesRegistration
@@ -24,7 +24,20 @@ namespace E_commerce.Web.Extenstion
         public static IApplicationBuilder UseSwaggerMiddleWares(this IApplicationBuilder app)
         {
             app.UseSwagger();
-            app.UseSwaggerUI();
+            app.UseSwaggerUI(Options =>
+            {
+                Options.ConfigObject = new ConfigObject()
+                {
+                    DocExpansion = DocExpansion.None,
+                    DisplayRequestDuration = true,
+                    DefaultModelsExpandDepth = -1
+                };
+                Options.SwaggerEndpoint("/swagger/v1/swagger.json", "E-commerce API V1");
+                Options.DocumentTitle = "E-commerce API Documentation";
+                Options.EnableFilter();
+                Options.EnablePersistAuthorization();
+
+            });
 
             return app;
         }

@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations;
 using System.Linq;
 using System.Security.Claims;
 using System.Text;
@@ -30,8 +31,8 @@ namespace Presentation.Controller
         }
 
         //check email
-        [HttpGet(template:"CheckEmail")]
-        public async Task<ActionResult<bool>> CheckEmail(string Email)
+        [HttpGet(template: "emailexists")]
+        public async Task<ActionResult<bool>> CheckEmail([EmailAddress] string Email)
         {
             var result = await _serviceManager.AuthenticationService.CheckEmailAddressAsync(Email);
             return Ok(result);
@@ -39,7 +40,13 @@ namespace Presentation.Controller
 
         //Get Current User
         [Authorize]
-        [HttpGet("CurrentUser")]
+        //[HttpGet("CurrentUser")]
+
+        // after user gets token every time he refreshes the page or makes a request,
+        // this method will be called to get the current user
+        // as http is stateless, we always need to get the user from the token
+        //commented the 'CurrentUser' for frontend Integration
+        [HttpGet]
         public async Task<ActionResult<UserDto>> GetCurrentUser()
         {
             var AppUser = await _serviceManager.AuthenticationService.GetCurrentUserAsync(GetEmailFromToken());

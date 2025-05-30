@@ -17,7 +17,7 @@ namespace Shared.DataTransferObjects.OrderModuleDto
         public string DeliveryTime { get; set; } = default!;
 
 
-        public decimal Price { get; set; }
+        public decimal Cost { get; set; }
 
     }
 }

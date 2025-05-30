@@ -12,7 +12,7 @@ using ServiceAbstraction;
 
 namespace Service
 {
-    public class ServiceManager(IUnitOfWork unitOfWork, IMapper mapper , IBasketRepository basketRepository , UserManager<ApplicationUser> _userManager , IConfiguration _configuration) : IServiceManager
+    public class ServiceManager(IUnitOfWork unitOfWork, IMapper mapper , IBasketRepository basketRepository , UserManager<ApplicationUser> _userManager , IConfiguration _configuration) 
     {
 
         private readonly Lazy<IProductService> _LazyProductService = new Lazy<IProductService>(() => new ProductService(unitOfWork, mapper));
@@ -28,7 +28,13 @@ namespace Service
 
 
         private readonly Lazy<IOrderService> _LazyOrderService = new Lazy<IOrderService>(valueFactory: () => new OrderService(unitOfWork , basketRepository , mapper));
-        public IOrderService OrderService => _LazyOrderService.Value;
+        public IOrderService OrderService => _LazyOrderService.Value; 
+        
+        private readonly Lazy<IPaymentService> _LazyPaymentService = new Lazy<IPaymentService>(valueFactory: () => new PaymentService(unitOfWork , mapper ,  basketRepository , _configuration));
+        public IPaymentService PaymentService => _LazyPaymentService.Value;
+
+       
+        
     }
 
 

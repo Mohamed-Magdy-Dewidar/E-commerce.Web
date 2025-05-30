@@ -17,15 +17,34 @@ namespace Service
 {
     public class OrderService(IUnitOfWork _unitOfWork , IBasketRepository basketRepository , IMapper _mapper) : IOrderService
     {
+
+        // CreateOrUpdateOrderAsync
         public async Task<OrderToReturnDto> CreateOrderAsync(OrderDto OrderDto, string Email)
         {
             // map Address
-            var OrderAddress = _mapper.Map<AddressDto, OrderAddress>(OrderDto.Address);
+            var OrderAddress = _mapper.Map<AddressDto, OrderAddress>(OrderDto.shipToAddress);
+            var OrderRepository = _unitOfWork.GetRepository<Order, Guid>();
+
+
+
+            var OrderPaymentSpecifications = new OrderWithPaymentIntentIdSpecifications(OrderDto.BasketId);
+            var existingOrder = await OrderRepository.GetByIdAsync(OrderPaymentSpecifications);
+
+
+            if(existingOrder != null)
+                OrderRepository.Delete(existingOrder);
+
 
 
             // get basket
             var Basket = await basketRepository.GetBasketAsync(OrderDto.BasketId) 
                 ?? throw new BasketNotFoundException(OrderDto.BasketId);
+
+            ArgumentNullException.ThrowIfNull(Basket.paymentIntentId, nameof(Basket.paymentIntentId));
+            
+
+           
+
 
 
             // List of Order Items
@@ -45,9 +64,9 @@ namespace Service
 
             decimal SubTotal = orderItems.Sum(I => I.Price * I.Quantity);
 
-            var Order = new Order(Email, OrderAddress, DeliveryMethod, orderItems, SubTotal);
+            var Order = new Order(Email, OrderAddress, DeliveryMethod, orderItems, SubTotal , paymentIntentId: Basket.paymentIntentId);
 
-            await _unitOfWork.GetRepository<Order, Guid>().AddAsync(Order);
+            await OrderRepository.AddAsync(Order);
             await _unitOfWork.SaveChanges();
 
 

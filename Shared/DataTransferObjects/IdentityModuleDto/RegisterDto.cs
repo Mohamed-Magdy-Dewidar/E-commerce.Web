@@ -10,13 +10,19 @@ namespace Shared.DataTransferObjects.IdentityModuleDto
     public class RegisterDto
     {
 
+        /**
+         * 
+         * username 
+         * PhoneNumber were set with default "" to fit angular project as it does not take username and phone number
+         * **/
 
-        [Required(ErrorMessage = "Username is required")]
-        [StringLength(20, MinimumLength = 3,
-            ErrorMessage = "Username must be between 3 and 20 characters")]
-        [RegularExpression(@"^[a-zA-Z0-9_]+$",
-            ErrorMessage = "Username can only contain letters, numbers, and underscores")]
-        public string UserName { get; set; } = default!;
+        //[Required(ErrorMessage = "Username is required")]
+        //[StringLength(20, MinimumLength = 3,
+        //    ErrorMessage = "Username must be between 3 and 20 characters")]
+        //[RegularExpression(@"^[a-zA-Z0-9_]+$",
+        //    ErrorMessage = "Username can only contain letters, numbers, and underscores")]
+
+        public string? UserName { get; set; } = "Mohamed_Dewidar";
 
 
 
@@ -26,8 +32,8 @@ namespace Shared.DataTransferObjects.IdentityModuleDto
 
 
 
-        [Phone(ErrorMessage = "Invalid phone number format")]
-        public string PhoneNumber { get; set; } = default!;
+        //[Phone(ErrorMessage = "Invalid phone number format")]
+        public string? PhoneNumber { get; set; } = "";
 
 
 

@@ -13,11 +13,13 @@ namespace Presentation.Controller
 
     
 
-    public class BasketController(IServiceManager serviceManager) : ApiBaseController
+    public class BasketsController(IServiceManager serviceManager) : ApiBaseController
     {
 
 
+
         [HttpGet]
+        [RedisCash]
         public async Task<ActionResult<CustomerBasketDto>> GetBasket(string key)
         {
             var basket = await serviceManager.BasketService.GetBasketAsync(key);
@@ -33,11 +35,13 @@ namespace Presentation.Controller
         }
 
 
-        [HttpDelete("{key}")] 
-        public async Task<ActionResult<bool>> DeleteBasket(string basketId)
+        //[HttpDelete("{id}")] 
+        [HttpDelete]
+        public async Task<ActionResult<bool>> DeleteBasket(string id)
         {
-            var deleted = await serviceManager.BasketService.DeleteBasketAsync(basketId);
-            return Ok(deleted);
+            var deleted = await serviceManager.BasketService.DeleteBasketAsync(id);
+            //return Ok(deleted);
+            return NoContent(); // NoContent is more appropriate for delete operations
         }
 
 

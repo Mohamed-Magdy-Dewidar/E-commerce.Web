@@ -13,6 +13,7 @@ using System.Net.Mail;
 
 namespace Presentation.Controller
 {
+
     [Authorize]
     public class OrdersController(IServiceManager _serviceManager) : ApiBaseController
     {
@@ -26,7 +27,7 @@ namespace Presentation.Controller
 
 
         [AllowAnonymous]
-        [HttpGet("DelvieryMethods")]
+        [HttpGet("DeliveryMethods")]
         public async Task<ActionResult<IEnumerable<DeliveryMethodDto>>> GetDeliveryMethod()
         {
             var DeliveryMethods = await _serviceManager.OrderService.GetDeliveryMethodsAsync();

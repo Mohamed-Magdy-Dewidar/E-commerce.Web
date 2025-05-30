@@ -18,9 +18,9 @@ namespace Shared.DataTransferObjects.ProductModuleDto
 
         public decimal price { get; set; }
 
-        public string BrandName { get; set; } = null!;
+        public string ProductBrand { get; set; } = null!;
 
-        public string TypeName { get; set; } = null!;
+        public string ProductType { get; set; } = null!;
 
 
 
