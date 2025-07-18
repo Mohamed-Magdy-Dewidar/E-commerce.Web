@@ -18,13 +18,12 @@ namespace Presentation.Controller
     {
 
 
+
         [HttpGet]
         [RedisCash]
         public async Task<ActionResult<PaginatedResult<ProductDto>>> GetAllProducts([FromQuery] ProductQueryParams queryParams)
         {
             // Validate the query parameters the Client did not send queries that where not register in the query params
-            
-
             var products = await _serviceManager.ProductService.GetAllProductsAsync(queryParams);
             return Ok(products);
         }

@@ -12,6 +12,7 @@ namespace Service
         Func<IBasketService> _basketFactory,
         Func<IOrderService> _orderFactory,
         Func<IAuthenticationService> _authFactory,        
+        Func<IAttachmentService> _attachmentFactory,        
         Func<IPaymentService> _paymentFactory) : IServiceManager
     {
 
@@ -25,8 +26,7 @@ namespace Service
         public IAuthenticationService AuthenticationService => _authFactory.Invoke();
 
         public IPaymentService PaymentService => _paymentFactory.Invoke();
-    
-    
 
+        public IAttachmentService AttachmentService => _attachmentFactory.Invoke();
     }
 }

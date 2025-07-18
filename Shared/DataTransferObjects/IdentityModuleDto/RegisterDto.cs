@@ -22,7 +22,7 @@ namespace Shared.DataTransferObjects.IdentityModuleDto
         //[RegularExpression(@"^[a-zA-Z0-9_]+$",
         //    ErrorMessage = "Username can only contain letters, numbers, and underscores")]
 
-        public string? UserName { get; set; } = "Mohamed_Dewidar";
+        public string? UserName { get; set; } = "Mohamed_Magdy_Dewidar899";
 
 
 

@@ -7,6 +7,7 @@ using AutoMapper;
 using DomainLayer.Models.ProductModule;
 using Shared.DataTransferObjects.ProductModuleDto;
 
+
 namespace Service.MappingProfiles
 {
     public class ProductProfile : Profile
@@ -23,8 +24,11 @@ namespace Service.MappingProfiles
                 .ForMember(dest => dest.PictureUrl, opt => opt.MapFrom<PictureUrlResolver>() );
 
 
+       
+
             CreateMap<ProductType, TypeDto>();
             CreateMap<ProductBrand, BrandDto>();
+   
 
 
 

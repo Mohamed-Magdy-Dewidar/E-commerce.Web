@@ -9,6 +9,7 @@ using Persistence;
 using Service;
 
 
+
 namespace E_commerce.Web
 {
     public class Program
@@ -36,6 +37,8 @@ namespace E_commerce.Web
             builder.Services.AddSwaggerServices();
             builder.Services.AddInfrastructureServices(builder.Configuration);
             builder.Services.AddApplicationServices();
+
+            
 
 
             builder.Services.AddWebApplicationServices();

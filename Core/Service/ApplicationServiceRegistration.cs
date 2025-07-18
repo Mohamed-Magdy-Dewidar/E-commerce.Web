@@ -16,6 +16,8 @@ namespace Service
             Services.AddAutoMapper(typeof(ProductProfile).Assembly);
 
             //Services.AddScoped<IServiceManager, ServiceManager>();
+
+           
             Services.AddScoped<IServiceManager, ServiceMangerWithFactoryDelegate>();
             Services.AddScoped<IProductService, ProductService>();
             Services.AddScoped<IBasketService, BasketService>();
@@ -23,6 +25,7 @@ namespace Service
             Services.AddScoped<IAuthenticationService, AuthenticationService>();
             Services.AddScoped<ICacheService, CacheService>();
             Services.AddScoped<IPaymentService, PaymentService>();
+            Services.AddScoped<IAttachmentService, FileSystemAttachmentService>();
             //using Primary  constructor for ServiceManager
 
 
@@ -36,8 +39,11 @@ namespace Service
             Services.AddScoped<Func<IAuthenticationService>>(factory => () => factory.GetRequiredService<IAuthenticationService>());
 
             Services.AddScoped<Func<IPaymentService>>(factory => () => factory.GetRequiredService<IPaymentService>());
+            
+            
+            Services.AddScoped<Func<IAttachmentService>>(factory => () => factory.GetRequiredService<IAttachmentService>());
 
-
+            
 
             // Using Factory Delegate for ServiceManager
             //Services.AddScoped<IServiceManager, ServiceMangerWithFactoryDelegate>(

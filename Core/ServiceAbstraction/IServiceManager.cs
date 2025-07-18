@@ -18,6 +18,9 @@ namespace ServiceAbstraction
         IPaymentService PaymentService { get; }
 
 
+        IAttachmentService AttachmentService { get; }
+
+
 
 
     }

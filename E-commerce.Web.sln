@@ -1,7 +1,7 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 17
-VisualStudioVersion = 17.13.35818.85 d17.13
+VisualStudioVersion = 17.13.35818.85
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "E-commerce.Web", "E-commerce.Web\E-commerce.Web.csproj", "{89B0A05C-B8D7-4757-86B4-21A1AECCBAD5}"
 EndProject
@@ -20,6 +20,8 @@ EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Presentation", "Infrastructure\Presentation\Presentation.csproj", "{7A0187F7-3372-404F-B256-20E5CC201F93}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Shared", "Shared\Shared.csproj", "{90832F4C-53F0-4DF7-B1DF-5F7B2AC5479D}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "AdminDashBoard", "AdminDashBoard\AdminDashBoard.csproj", "{18723BE9-C137-46A8-825F-4BA160E597A8}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -55,6 +57,10 @@ Global
 		{90832F4C-53F0-4DF7-B1DF-5F7B2AC5479D}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{90832F4C-53F0-4DF7-B1DF-5F7B2AC5479D}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{90832F4C-53F0-4DF7-B1DF-5F7B2AC5479D}.Release|Any CPU.Build.0 = Release|Any CPU
+		{18723BE9-C137-46A8-825F-4BA160E597A8}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{18723BE9-C137-46A8-825F-4BA160E597A8}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{18723BE9-C137-46A8-825F-4BA160E597A8}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{18723BE9-C137-46A8-825F-4BA160E597A8}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
